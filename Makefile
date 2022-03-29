@@ -1,0 +1,2 @@
+check:
+	g++ --version
