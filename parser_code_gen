@@ -1,0 +1,9 @@
+PARSE_CMD(help, HELP, 
+{
+	std::cout << "..." << std::endl;
+})
+
+PARSE_CMD(quit, QUIT,
+{
+	quit = true;
+})

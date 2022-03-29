@@ -8,17 +8,17 @@ int main() {
 		bool quit = false;
 
 		switch(Parse(req)) {
-			case ParseRet::HELP:
-				std::cout << "..." << std::endl;
-				break;
+#define PARSE_CMD(name, parse_ret, code) \
+			case ParseRet::parse_ret:    \
+				code                     \
+				break;           		
+//----------------------------------------
 
-			case ParseRet::INCORRECT:
+#include "parser_code_gen"
+#undef PARSE_CMD
+
+			default:
 				std::cout << "Incorrect command" << std::endl;
-				break;
-
-			case ParseRet::QUIT:
-				quit = true;
-				break;
 		}
 
 		if (quit)

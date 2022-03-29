@@ -8,10 +8,13 @@ bool CheckPrefStr(const std::string& base_str, std::string search_str) {
 }
 
 ParseRet Parse(std::string& req) {
-	if (CheckPrefStr(req, "help")) {
-		return ParseRet::HELP;
-	} else if (CheckPrefStr(req, "quit")) {
-		return ParseRet::QUIT;
-	} else
-		return ParseRet::INCORRECT;
+
+#define PARSE_CMD(name, parse_ret, code) \
+	if (CheckPrefStr(req, #name))        \
+		return ParseRet::parse_ret;
+//----------------------------------------
+
+#include "parser_code_gen"     
+#undef PARSE_CMD
+	else return ParseRet::INCORRECT;
 }
