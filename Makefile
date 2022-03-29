@@ -8,9 +8,10 @@ test:
 
 install:
 	g++ FileRedactor.cpp -c -o FileRedactor.o
-	g++ test.cpp -o a FileRedactor.o
+	g++ file_redactor.cpp -o file_redactor FileRedactor.o
 
 clean:
-	rm unit_test
-	rm UNIT_TEST
-	rm FileRedactor.o
+	rm unit_test || true
+	rm UNIT_TEST || true
+	rm FileRedactor.o || true
+	rm file_redactor || true
