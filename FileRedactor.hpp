@@ -2,19 +2,37 @@
 
 #include <string>
 #include <map>
+#include <iostream>
 #include <fstream>
 
 class FileRedactor {
 public:
-	FileRedactor(std::fstream& InpOutThread) :
-		InpOutThread_(InpOutThread)
+
+	FileRedactor(const std::string filePath) :
+		storage_(),
+		inpOutThread_(filePath, std::ios::in | std::ios::out)
 	{}
 
-	FileRedactor(std::string FilePath) {
-		InpOutThread_.open(FilePath);
+	~FileRedactor() {
+		inpOutThread_.close();
 	}
+
+	void ReadFile() {
+		std::string line;
+
+		for (int i = 0; getline(inpOutThread_, line); ++i)
+			storage_[i] = line;
+	}
+
+	void CatFile() {
+		for (auto it = storage_.begin(); it != storage_.end(); ++it)
+			std::cout << it->second << std::endl;
+	}
+
 
 private:
 	std::map<unsigned long long, std::string> storage_;
-	std::fstream InpOutThread_;
+	std::fstream inpOutThread_;
+
+	bool fileWasOpened_;
 };
