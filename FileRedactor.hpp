@@ -8,31 +8,15 @@
 class FileRedactor {
 public:
 
-	FileRedactor(const std::string filePath) :
-		storage_(),
-		inpOutThread_(filePath, std::ios::in | std::ios::out)
-	{}
+	FileRedactor(const std::string filePath);
+	~FileRedactor();
 
-	~FileRedactor() {
-		inpOutThread_.close();
-	}
-
-	void ReadFile() {
-		std::string line;
-
-		for (int i = 0; getline(inpOutThread_, line); ++i)
-			storage_[i] = line;
-	}
-
-	void CatFile() {
-		for (auto it = storage_.begin(); it != storage_.end(); ++it)
-			std::cout << it->second << std::endl;
-	}
+	void CatFile();
 
 
 private:
+	void ReadFile();
+
 	std::map<unsigned long long, std::string> storage_;
 	std::fstream inpOutThread_;
-
-	bool fileWasOpened_;
 };
