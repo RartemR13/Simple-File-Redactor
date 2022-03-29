@@ -22,3 +22,7 @@ void FileRedactor::CatFile() {
 	for (auto it = storage_.begin(); it != storage_.end(); ++it)
 			std::cout << it->second << std::endl;
 }
+
+std::string& FileRedactor::operator[] (unsigned int num) {
+	return storage_[num];
+}

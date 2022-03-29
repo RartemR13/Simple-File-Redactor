@@ -12,6 +12,7 @@ public:
 	~FileRedactor();
 
 	void CatFile();
+	std::string& operator[] (unsigned int num);
 
 
 private:
