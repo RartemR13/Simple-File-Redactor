@@ -1,8 +1,12 @@
 #include "FileRedactor.hpp"
 #include "parser.hpp"
 
+#include <sstream>
+
 int main() {
 	std::string req;
+
+	FileRedactor file;
 
 	while (getline(std::cin, req)) {
 		bool quit = false;

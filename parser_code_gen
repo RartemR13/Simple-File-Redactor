@@ -7,3 +7,34 @@ PARSE_CMD(quit, QUIT,
 {
 	quit = true;
 })
+
+PARSE_CMD(file, SET_FILE,
+{
+	std::stringstream str_stream(req);
+	std::string let;
+
+	str_stream >> let;
+
+	std::string file_name;
+	str_stream >> file_name;
+
+	file.ReadFile(file_name);
+})
+
+PARSE_CMD(get, GET_LINE,
+{
+	std::stringstream str_stream(req);
+	std::string let;
+
+	str_stream >> let;
+
+	unsigned int num = 0;
+	str_stream >> num;
+
+	std::cout << file[num] << std::endl;
+})
+
+PARSE_CMD(cat, CAT_FILE,
+{
+	file.CatFile();
+})

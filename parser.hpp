@@ -4,8 +4,10 @@
 
 enum ParseRet {
 	HELP,
+	SET_FILE,
 	SET_LINE,
 	GET_LINE,
+	CAT_FILE,
 	INCORRECT,
 	QUIT
 };

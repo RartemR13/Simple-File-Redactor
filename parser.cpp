@@ -1,5 +1,7 @@
 #include "parser.hpp"
 
+#include <sstream>
+
 bool CheckPrefStr(const std::string& base_str, std::string search_str) {
 	if (base_str.length() < search_str.length())
 		return false;

@@ -5,17 +5,33 @@ FileRedactor::FileRedactor(const std::string filePath) :
 	inpOutThread_(filePath, std::ios::in | std::ios::out)
 {
 	ReadFile();
+	file_open_ = true;
 }
 
 FileRedactor::~FileRedactor() {
-	inpOutThread_.close();
+	if (file_open_)
+		inpOutThread_.close();
+
+	file_open_ = false;
 }
 
 void FileRedactor::ReadFile() {
+	storage_.clear();
+
 	std::string line;
 
 	for (int i = 0; getline(inpOutThread_, line); ++i)
 		storage_[i] = line;
+} 
+
+void FileRedactor::ReadFile(const std::string filePath) {
+	if (file_open_)
+		inpOutThread_.close();
+
+	inpOutThread_.open(filePath, std::ios::in | std::ios::out);
+	file_open_ = true;
+
+	ReadFile();		
 } 
 
 void FileRedactor::CatFile() {
@@ -26,3 +42,4 @@ void FileRedactor::CatFile() {
 std::string& FileRedactor::operator[] (unsigned int num) {
 	return storage_[num];
 }
+
