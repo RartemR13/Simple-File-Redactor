@@ -63,3 +63,8 @@ PARSE_CMD(save, SAVE_FILE,
 {
     file.WriteFile();
 })
+
+PARSE_CMD(clear, CLEAR,
+{
+    system("clear");
+})

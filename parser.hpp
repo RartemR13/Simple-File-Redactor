@@ -10,7 +10,8 @@ enum ParseRet {
 	CAT_FILE,
     SAVE_FILE,
 	INCORRECT,
-	QUIT
+	QUIT,
+    CLEAR
 };
 
 bool CheckPrefStr(const std::string&, std::string);
