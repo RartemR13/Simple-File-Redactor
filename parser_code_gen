@@ -76,3 +76,18 @@ PARSE_CMD(clear, CLEAR,
 {
     system("clear");
 })
+
+PARSE_CMD(add, ADD_LINE,
+{
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+    
+    std::string add_str;
+
+    str_stream.ignore(1);
+    getline(str_stream, add_str);
+
+    file.AddLine(add_str);
+})

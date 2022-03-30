@@ -12,6 +12,8 @@ public:
 	FileRedactor(const std::string);
 	~FileRedactor();
 
+    unsigned long long LinesCount();
+    void AddLine(const std::string);
 	void CatFile();
     void WriteFile();
 	void ReadFile(const std::string);

@@ -7,6 +7,7 @@ enum ParseRet {
 	SET_FILE,
 	SET_LINE,
 	GET_LINE,
+    ADD_LINE,
 	CAT_FILE,
     SAVE_FILE,
 	INCORRECT,

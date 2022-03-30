@@ -64,3 +64,11 @@ void FileRedactor::CatFile() {
 std::string& FileRedactor::operator[] (unsigned long long num) {
 	return storage_.at(num);   
 }
+
+unsigned long long FileRedactor::LinesCount() {
+    return storage_.size();
+}
+
+void FileRedactor::AddLine(const std::string add_str) {
+    storage_[LinesCount()] = add_str;
+}
