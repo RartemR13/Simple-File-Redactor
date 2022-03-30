@@ -62,6 +62,5 @@ void FileRedactor::CatFile() {
 }
 
 std::string& FileRedactor::operator[] (unsigned long long num) {
-	return storage_[num];
+	return storage_.at(num);   
 }
-

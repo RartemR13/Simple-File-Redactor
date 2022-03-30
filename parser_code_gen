@@ -31,7 +31,11 @@ PARSE_CMD(get, GET_LINE,
 	unsigned long long num = 0;
 	str_stream >> num;
 
-	std::cout << file[num] << std::endl;
+    try {
+        std::cout << file[num] << std::endl;
+    } catch(std::out_of_range) {
+        std::cout << "Out of range error: incorrect num of line." << std::endl;
+    }
 })
 
 PARSE_CMD(cat, CAT_FILE,
@@ -56,7 +60,11 @@ PARSE_CMD(set, SET_LINE,
 
     set_str = let + set_str;
 
-    file[num] = set_str;
+    try {
+        file[num] = set_str;
+    } catch(std::out_of_range) {
+        std::cout << "Out of range error: incorrect num of line." << std::endl;
+    }
 })
 
 PARSE_CMD(save, SAVE_FILE,
