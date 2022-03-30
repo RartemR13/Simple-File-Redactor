@@ -1,12 +1,8 @@
 #include "FileRedactor.hpp"
 
-FileRedactor::FileRedactor(const std::string filePath) :
-	storage_(),
-	inpOutThread_(filePath, std::ios::in),
-    filePath_(filePath),
-    fileOpen_(false)
-{
-	ReadFile();
+FileRedactor::FileRedactor(const std::string filePath) {
+    inpOutThread_.exceptions(std::fstream::failbit | std::fstream::badbit);
+	ReadFile(filePath);
 }
 
 FileRedactor::~FileRedactor() {
@@ -30,9 +26,15 @@ void FileRedactor::ReadFile() {
 void FileRedactor::WriteFile() {
     inpOutThread_.close();
 
-    inpOutThread_.open(filePath_, std::ios::out | std::ios::trunc);
-    for (auto it = storage_.begin(); it != storage_.end(); ++it)
-        inpOutThread_ << it->second << std::endl;
+    try {
+        inpOutThread_.open(filePath_, std::ios::out | std::ios::trunc);
+        if (!inpOutThread_)
+            throw std::runtime_error("");
+        for (auto it = storage_.begin(); it != storage_.end(); ++it)
+            inpOutThread_ << it->second << std::endl;
+    } catch(std::exception) {
+        std::cout << "Runtime error: can't write in file." << std::endl;
+    }
     inpOutThread_.close();
 
     inpOutThread_.open(filePath_, std::ios::in);
@@ -41,8 +43,14 @@ void FileRedactor::WriteFile() {
 void FileRedactor::ReadFile(const std::string filePath) {
 	if (fileOpen_)
 		inpOutThread_.close();
-
-	inpOutThread_.open(filePath, std::ios::in);
+    try {
+	   inpOutThread_.open(filePath, std::ios::in);
+       if (!inpOutThread_)
+        throw std::runtime_error("");
+    } catch(std::exception) {
+        std::cout << "Runtime error: can't work with with file or file not exist." << std::endl;
+        return;
+    }
     filePath_ = filePath;
 
 	ReadFile();		
