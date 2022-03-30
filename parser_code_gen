@@ -38,3 +38,23 @@ PARSE_CMD(cat, CAT_FILE,
 {
 	file.CatFile();
 })
+
+PARSE_CMD(set, SET_LINE,
+{
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    unsigned int num = 0;
+    str_stream >> num;
+
+    str_stream >> let;
+
+    std::string set_str;
+    getline(str_stream, set_str);
+
+    set_str = let + set_str;
+
+    file[num] = set_str;
+})
