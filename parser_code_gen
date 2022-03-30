@@ -28,7 +28,7 @@ PARSE_CMD(get, GET_LINE,
 
 	str_stream >> let;
 
-	unsigned int num = 0;
+	unsigned long long num = 0;
 	str_stream >> num;
 
 	std::cout << file[num] << std::endl;
@@ -46,7 +46,7 @@ PARSE_CMD(set, SET_LINE,
 
     str_stream >> let;
 
-    unsigned int num = 0;
+    unsigned long long num = 0;
     str_stream >> num;
 
     str_stream >> let;
@@ -57,4 +57,9 @@ PARSE_CMD(set, SET_LINE,
     set_str = let + set_str;
 
     file[num] = set_str;
+})
+
+PARSE_CMD(save, SAVE_FILE,
+{
+    file.WriteFile();
 })

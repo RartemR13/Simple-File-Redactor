@@ -2,17 +2,18 @@
 
 FileRedactor::FileRedactor(const std::string filePath) :
 	storage_(),
-	inpOutThread_(filePath, std::ios::in | std::ios::out)
+	inpOutThread_(filePath, std::ios::in),
+    filePath_(filePath),
+    fileOpen_(false)
 {
 	ReadFile();
-	file_open_ = true;
 }
 
 FileRedactor::~FileRedactor() {
-	if (file_open_)
+	if (fileOpen_)
 		inpOutThread_.close();
 
-	file_open_ = false;
+	fileOpen_ = false;
 }
 
 void FileRedactor::ReadFile() {
@@ -22,14 +23,27 @@ void FileRedactor::ReadFile() {
 
 	for (int i = 0; getline(inpOutThread_, line); ++i)
 		storage_[i] = line;
+
+    fileOpen_ = true;
 } 
 
+void FileRedactor::WriteFile() {
+    inpOutThread_.close();
+
+    inpOutThread_.open(filePath_, std::ios::out | std::ios::trunc);
+    for (auto it = storage_.begin(); it != storage_.end(); ++it)
+        inpOutThread_ << it->second << std::endl;
+    inpOutThread_.close();
+
+    inpOutThread_.open(filePath_, std::ios::in);
+}
+
 void FileRedactor::ReadFile(const std::string filePath) {
-	if (file_open_)
+	if (fileOpen_)
 		inpOutThread_.close();
 
-	inpOutThread_.open(filePath, std::ios::in | std::ios::out);
-	file_open_ = true;
+	inpOutThread_.open(filePath, std::ios::in);
+    filePath_ = filePath;
 
 	ReadFile();		
 } 
@@ -39,7 +53,7 @@ void FileRedactor::CatFile() {
 			std::cout << it->second << std::endl;
 }
 
-std::string& FileRedactor::operator[] (unsigned int num) {
+std::string& FileRedactor::operator[] (unsigned long long num) {
 	return storage_[num];
 }
 
