@@ -2,10 +2,8 @@ check:
 	g++ --version
 
 test:
-	g++ DTree/unit/unit_test.cpp -o DTree/unit/unit_test
-	./DTree/unit/unit_test
-	g++ DTree/stress/stress_test.cpp -o DTree/stress/stress_test
-	bash DTree/stress/stress.bash
+	cd DTree;\
+		make test
 
 	g++ FileRedactor.cpp -c -o FileRedactor.o
 	g++ unit_tests.cpp -o unit_test FileRedactor.o
@@ -17,10 +15,9 @@ install:
 	g++ file_redactor.cpp -o file_redactor FileRedactor.o parser.o
 
 clean:
-	rm DTree/stress/stress_test || true
-	rm DTree/unit/unit_test || true
-	rm out || true
-
+	cd DTree;\
+		make clean
+		
 	rm unit_test || true
 	rm UNIT_TEST || true
 	rm FileRedactor.o || true
