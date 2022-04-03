@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "DTree/DTree.hpp"
+
 class FileRedactor {
 public:
 
@@ -20,7 +22,7 @@ public:
 	std::string& operator[] (unsigned long long);
 
 private:
-	std::map<unsigned long long, std::string> storage_;
+	DTree<std::string> storage_;
 	std::fstream inpOutThread_;
     std::string filePath_;
 

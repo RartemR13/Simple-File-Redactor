@@ -1,5 +1,6 @@
 #include "FileRedactor.hpp"
 #include <cassert>
+#include <iostream>
 
 void TestReadFile() {
 	system("touch UNIT_TEST &&"
@@ -9,8 +10,7 @@ void TestReadFile() {
 
 	assert(file[0] == "test 1" && 
 		   file[1] == "test 2" && 
-		   file[2] == "test 3" &&
-		   file[3] == "");
+		   file[2] == "test 3");
 
 	std::cout << "TestReadFile: OK" << std::endl;
 }
@@ -25,8 +25,7 @@ void TestModifyLine() {
 
 	assert(file[0] == "zzz" && 
 		   file[1] == "test 2" && 
-		   file[2] == "test 3" &&
-		   file[3] == "");
+		   file[2] == "test 3");
 
 	std::cout << "TestModifyLine: OK" << std::endl;
 }

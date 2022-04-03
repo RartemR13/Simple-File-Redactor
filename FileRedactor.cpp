@@ -1,7 +1,6 @@
 #include "FileRedactor.hpp"
 
 FileRedactor::FileRedactor(const std::string filePath) {
-    inpOutThread_.exceptions(std::fstream::failbit | std::fstream::badbit);
 	ReadFile(filePath);
 }
 
@@ -13,12 +12,12 @@ FileRedactor::~FileRedactor() {
 }
 
 void FileRedactor::ReadFile() {
-	storage_.clear();
+	storage_.Clear();
 
 	std::string line;
 
 	for (int i = 0; getline(inpOutThread_, line); ++i)
-		storage_[i] = line;
+		storage_.Insert(line, i);
 
     fileOpen_ = true;
 } 
@@ -30,8 +29,9 @@ void FileRedactor::WriteFile() {
         inpOutThread_.open(filePath_, std::ios::out | std::ios::trunc);
         if (!inpOutThread_)
             throw std::runtime_error("");
-        for (auto it = storage_.begin(); it != storage_.end(); ++it)
-            inpOutThread_ << it->second << std::endl;
+
+        for (int i = 0; i < storage_.Size(); ++i)
+            inpOutThread_ << storage_[i] << std::endl;
     } catch(std::exception) {
         std::cout << "Runtime error: can't write in file." << std::endl;
     }
@@ -57,18 +57,18 @@ void FileRedactor::ReadFile(const std::string filePath) {
 } 
 
 void FileRedactor::CatFile() {
-	for (auto it = storage_.begin(); it != storage_.end(); ++it)
-			std::cout << it->second << std::endl;
+    for (int i = 0; i < storage_.Size(); ++i)
+        std::cout << storage_[i] << std::endl;
 }
 
 std::string& FileRedactor::operator[] (unsigned long long num) {
-	return storage_.at(num);   
+	return storage_[num];   
 }
 
 unsigned long long FileRedactor::LinesCount() {
-    return storage_.size();
+    return storage_.Size();
 }
 
 void FileRedactor::AddLine(const std::string add_str) {
-    storage_[LinesCount()] = add_str;
+    storage_.Insert(add_str, storage_.Size());
 }
