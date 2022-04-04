@@ -1,0 +1,3 @@
+[submodule "DTree"]
+	path = DTree
+	url = https://github.com/RartemR13/DTree
