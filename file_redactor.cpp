@@ -12,9 +12,9 @@ int main() {
 		bool quit = false;
 
 		switch(Parse(req)) {
-#define PARSE_CMD(name, parse_ret, code) \
-			case ParseRet::parse_ret:    \
-				code                     \
+#define PARSE_CMD(name, parse_ret, check_code, code) \
+			case ParseRet::parse_ret:    			 \
+				code                     			 \
 				break;           		
 //----------------------------------------
 

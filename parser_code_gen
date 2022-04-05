@@ -1,14 +1,39 @@
-PARSE_CMD(help, HELP, 
+PARSE_CMD(help, HELP,
+{
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    correct = !(str_stream >> let);   
+},
 {
 	std::cout << "..." << std::endl;
 })
 
-PARSE_CMD(quit, QUIT,
+PARSE_CMD(quit, QUIT, 
+{
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    correct = !(str_stream >> let);    
+},
 {
 	quit = true;
 })
 
 PARSE_CMD(file, SET_FILE,
+{
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    if (str_stream >> let)
+        correct = !(str_stream >> let);      
+},
 {
 	std::stringstream str_stream(req);
 	std::string let;
@@ -22,6 +47,17 @@ PARSE_CMD(file, SET_FILE,
 })
 
 PARSE_CMD(get, GET_LINE,
+{
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    unsigned long long num = 0;
+
+    if (str_stream >> num)
+        correct = !(str_stream >> let);    
+},
 {
 	std::stringstream str_stream(req);
 	std::string let;
@@ -42,6 +78,14 @@ PARSE_CMD(get, GET_LINE,
 
 PARSE_CMD(cat, CAT_FILE,
 {
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    correct = !(str_stream >> let);      
+},
+{
     try {
 	   file.CatFile();
     } catch(std::runtime_error) {
@@ -57,14 +101,22 @@ PARSE_CMD(set, SET_LINE,
     str_stream >> let;
 
     unsigned long long num = 0;
-    str_stream >> num;
+
+    correct = static_cast<bool>(str_stream >> num);    
+},
+{
+    std::stringstream str_stream(req);
+    std::string let;
 
     str_stream >> let;
 
+    unsigned long long num = 0;
+    str_stream >> num;
+    
     std::string set_str;
-    getline(str_stream, set_str);
 
-    set_str = let + set_str;
+    str_stream.ignore(1);
+    getline(str_stream, set_str);
 
     try {
         file[num] = set_str;
@@ -76,6 +128,14 @@ PARSE_CMD(set, SET_LINE,
 })
 
 PARSE_CMD(save, SAVE_FILE,
+{ 
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    correct = !(str_stream >> let);
+},
 {
     try {
         file.WriteFile();
@@ -85,11 +145,29 @@ PARSE_CMD(save, SAVE_FILE,
 })
 
 PARSE_CMD(clear, CLEAR,
+{ 
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    correct = !(str_stream >> let);  
+},
 {
     system("clear");
 })
 
 PARSE_CMD(add, ADD_LINE,
+{ 
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    unsigned long long num = 0;
+
+    correct = static_cast<bool>(str_stream >> num);    
+},
 {
     std::stringstream str_stream(req);
     std::string let;
@@ -113,4 +191,15 @@ PARSE_CMD(add, ADD_LINE,
     }
 })
 
-PARSE_CMD(SKIP_LINE, SKIP_LINE, {})
+PARSE_CMD(, SKIP_LINE, 
+{
+    std::stringstream str_stream(req);
+    std::string let;
+
+    str_stream >> let;
+
+    correct = !(str_stream >> let);    
+},
+{
+    std::cout << "YES MASTER!" << std::endl;
+})

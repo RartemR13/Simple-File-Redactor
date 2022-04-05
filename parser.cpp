@@ -4,22 +4,28 @@
 #include <sstream>
 
 bool CheckPrefStr(const std::string& base_str, std::string search_str) {
-	if (base_str.length() < search_str.length())
-		return false;	
+	 std::stringstream str_stream(base_str);
+	 std::string check_str;
 
-	return base_str.substr(0, search_str.length()) == search_str;
+	 str_stream >> check_str;
+
+	return check_str == search_str;
 }
 
 ParseRet Parse(std::string& req) {
 
-#define PARSE_CMD(name, parse_ret, code) \
-	if (CheckPrefStr(req, #name))        \
-		return ParseRet::parse_ret;
+#define PARSE_CMD(name, parse_ret, check_code, code) \
+	if (CheckPrefStr(req, #name)) {		 			 \
+		bool correct = false;						 \
+		check_code							 		 \
+		if (correct)					 			 \
+			return ParseRet::parse_ret;  			 \
+	} else
 //----------------------------------------
 
 #include "parser_code_gen"     
 #undef PARSE_CMD
-	else if (req == "")
+	if (req == "")
 		return ParseRet::SKIP_LINE;
-	else return ParseRet::INCORRECT;
+	return ParseRet::INCORRECT;
 }
