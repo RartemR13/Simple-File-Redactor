@@ -17,8 +17,9 @@ install:
 clean:
 	cd DTree;\
 		make clean
-		
+
 	rm unit_test || true
 	rm UNIT_TEST || true
 	rm FileRedactor.o || true
 	rm parser.o || true
+	

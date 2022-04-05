@@ -69,6 +69,6 @@ unsigned long long FileRedactor::LinesCount() {
     return storage_.Size();
 }
 
-void FileRedactor::AddLine(const std::string add_str) {
-    storage_.Insert(add_str, storage_.Size());
+void FileRedactor::AddLine(const std::string add_str, unsigned long long num) {
+    storage_.Insert(add_str, num);
 }

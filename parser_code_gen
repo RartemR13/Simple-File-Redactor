@@ -83,11 +83,20 @@ PARSE_CMD(add, ADD_LINE,
     std::string let;
 
     str_stream >> let;
+
+    unsigned long long num = 0;
+    str_stream >> num;
     
     std::string add_str;
 
     str_stream.ignore(1);
     getline(str_stream, add_str);
 
-    file.AddLine(add_str);
+    try {
+        file.AddLine(add_str, num);
+    } catch(std::out_of_range) {
+        std::cout << "Out of range error: incorrect num of line." << std::endl;
+    }
 })
+
+PARSE_CMD(SKIP_LINE, SKIP_LINE, {})
