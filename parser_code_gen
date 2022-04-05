@@ -35,12 +35,18 @@ PARSE_CMD(get, GET_LINE,
         std::cout << file[num] << std::endl;
     } catch(std::out_of_range) {
         std::cout << "Out of range error: incorrect num of line." << std::endl;
+    } catch(std::runtime_error) {
+        std::cout << "Runtime error: chose file with command 'file'." << std::endl;
     }
 })
 
 PARSE_CMD(cat, CAT_FILE,
 {
-	file.CatFile();
+    try {
+	   file.CatFile();
+    } catch(std::runtime_error) {
+        std::cout << "Runtime error: chose file with command 'file'." << std::endl;
+    }
 })
 
 PARSE_CMD(set, SET_LINE,
@@ -64,12 +70,18 @@ PARSE_CMD(set, SET_LINE,
         file[num] = set_str;
     } catch(std::out_of_range) {
         std::cout << "Out of range error: incorrect num of line." << std::endl;
+    } catch(std::runtime_error) {
+        std::cout << "Runtime error: chose file with command 'file'." << std::endl;
     }
 })
 
 PARSE_CMD(save, SAVE_FILE,
 {
-    file.WriteFile();
+    try {
+        file.WriteFile();
+    } catch(std::runtime_error) {
+        std::cout << "Runtime error: chose file with command 'file'." << std::endl;
+    }
 })
 
 PARSE_CMD(clear, CLEAR,
@@ -96,6 +108,8 @@ PARSE_CMD(add, ADD_LINE,
         file.AddLine(add_str, num);
     } catch(std::out_of_range) {
         std::cout << "Out of range error: incorrect num of line." << std::endl;
+    } catch(std::runtime_error) {
+        std::cout << "Runtime error: chose file with command 'file'." << std::endl;
     }
 })
 

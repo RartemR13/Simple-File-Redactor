@@ -23,6 +23,9 @@ void FileRedactor::ReadFile() {
 } 
 
 void FileRedactor::WriteFile() {
+    if (!fileOpen_)
+        throw std::runtime_error("");
+
     inpOutThread_.close();
 
     try {
@@ -43,6 +46,7 @@ void FileRedactor::WriteFile() {
 void FileRedactor::ReadFile(const std::string filePath) {
 	if (fileOpen_)
 		inpOutThread_.close();
+
     try {
 	   inpOutThread_.open(filePath, std::ios::in);
        if (!inpOutThread_)
@@ -57,11 +61,17 @@ void FileRedactor::ReadFile(const std::string filePath) {
 } 
 
 void FileRedactor::CatFile() {
+    if (!fileOpen_)
+        throw std::runtime_error("");
+
     for (int i = 0; i < storage_.Size(); ++i)
         std::cout << storage_[i] << std::endl;
 }
 
 std::string& FileRedactor::operator[] (unsigned long long num) {
+    if (!fileOpen_)
+        throw std::runtime_error("");
+
 	return storage_[num];   
 }
 
@@ -70,5 +80,8 @@ unsigned long long FileRedactor::LinesCount() {
 }
 
 void FileRedactor::AddLine(const std::string add_str, unsigned long long num) {
+    if (!fileOpen_)
+        throw std::runtime_error("");
+
     storage_.Insert(add_str, num);
 }
