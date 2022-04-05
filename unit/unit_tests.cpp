@@ -1,4 +1,4 @@
-#include "FileRedactor.hpp"
+#include "../FileRedactor/FileRedactor.hpp"
 #include <cassert>
 #include <iostream>
 

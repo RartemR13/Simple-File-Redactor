@@ -21,9 +21,9 @@ ParseRet Parse(std::string& req) {
 		if (correct)					 			 \
 			return ParseRet::parse_ret;  			 \
 	} else
-//----------------------------------------
+//----------------------------------------------------
 
-#include "parser_code_gen"     
+#include "../code_gen/parser_code_gen"     
 #undef PARSE_CMD
 	if (req == "")
 		return ParseRet::SKIP_LINE;

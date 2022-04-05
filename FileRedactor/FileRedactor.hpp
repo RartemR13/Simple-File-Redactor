@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "DTree/DTree.hpp"
+#include "../DTree/DTree.hpp"
 
 class FileRedactor {
 public:

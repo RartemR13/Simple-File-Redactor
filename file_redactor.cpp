@@ -1,5 +1,5 @@
-#include "FileRedactor.hpp"
-#include "parser.hpp"
+#include "FileRedactor/FileRedactor.hpp"
+#include "parser/parser.hpp"
 
 #include <sstream>
 
@@ -16,13 +16,13 @@ int main() {
 			case ParseRet::parse_ret:    			 \
 				code                     			 \
 				break;           		
-//----------------------------------------
+//----------------------------------------------------
 
-#include "parser_code_gen"
+#include "code_gen/parser_code_gen"
 #undef PARSE_CMD
 
 			default:
-				std::cout << "Incorrect command" << std::endl;
+				std::cout << "Incorrect command." << std::endl;
 		}
 
 		if (quit)
